@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+
+*{
+    font-family: 'Kanit', sans-serif;
+}
+body{
+    background-color: #9cff24
+}
+.ant-input-type-email .ant-input-placeholder {
+    font-family: 'Kanit', sans-serif;
+    font-size: 18px;
+  }
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
