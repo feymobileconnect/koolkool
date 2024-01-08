@@ -18,11 +18,9 @@ const FormAntd = () => {
   const [formData, setFormData] = useState({});
   const [selectedResidence, setSelectedResidence] = useState([]);
 
-  // checkbox
   const [isChecked, setIsChecked] = useState(false);
   const [actChecked, setActChecked] = useState(false);
 
-  // PrivacyModalOpen , ActivityPrivacyOpen
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isActivityPrivacyOpen, setIsActivityPrivacyOpen] = useState(false);
 
@@ -40,18 +38,14 @@ const FormAntd = () => {
         console.error("Form data is incomplete");
         return;
       }
-
-      // Convert birth from Moment object to "DD-MM-YYYY" string
       const formattedBirth = formData.birth.format("DD-MM-YYYY");
 
-      // Update formData with the formatted birth
       const updatedForm = { ...formData, role: "user", birth: formattedBirth };
 
       const docRef = await addDoc(collection(db, "users"), updatedForm);
       console.log("Data sent to Firestore:", updatedForm);
       console.log("Document written with ID: ", docRef.id);
 
-      // แจ้งเตือนลงทะเบียนสำเร็จ
       Swal.fire({
         icon: "success",
         title: "ลงทะเบียนสำเร็จ",
@@ -66,7 +60,6 @@ const FormAntd = () => {
     }
   };
 
-  // AddData
   const checkPhoneNumberInFirestore = async (phoneNumber) => {
     const userRef = collection(db, "users");
     const snapshot = await getDocs(userRef);
@@ -86,7 +79,6 @@ const FormAntd = () => {
         );
 
         if (isPhoneRegistered) {
-          // แจ้งเตือนผู้ใช้ว่าเบอร์โทรศัพท์นี้ถูกลงทะเบียนแล้ว
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -94,8 +86,7 @@ const FormAntd = () => {
           });
           console.log("เบอร์โทรศัพท์นี้ถูกลงทะเบียนแล้ว!");
 
-          return; // ไม่ทำการลงทะเบียนในกรณีที่เบอร์โทรศัพท์ถูกลงทะเบียนแล้ว
-        }
+          return; 
 
         openModal();
       })
@@ -116,9 +107,8 @@ const FormAntd = () => {
     setIsPrivacyModalOpen(false);
   };
 
-  // Checkbox for Activity Privacy
   const handleActivityPrivacyAccept = () => {
-    form.setFieldsValue({ activityPrivacyCheckbox: true }); // ติ๊กเครื่องหมาย Checkbox ใน FormAntd เมื่อยอมรับ
+    form.setFieldsValue({ activityPrivacyCheckbox: true }); 
     setActChecked(true);
     setIsActivityPrivacyOpen(true);
   };
@@ -129,16 +119,7 @@ const FormAntd = () => {
     setIsActivityPrivacyOpen(false);
   };
 
-  // Accept
-  /* const handleAcceptTermsInModal = async () => {
-    try {
-      await handleAcceptTermsInModalFromRegister(formData);
-      closeModal();
-      navigate("/registerSuccess");
-    } catch (error) {
-      console.error(error);
-    }
-  }; */
+
 
   const onFinish = (values) => {
     console.log("Received values of form:", values);
@@ -151,9 +132,6 @@ const FormAntd = () => {
         form={form}
         name="register"
         onFinish={onFinish}
-        /* initialValues={{
-        residence: ["จังหวัด"],
-      }} */
         style={{
           maxWidth: 600,
         }}
@@ -163,14 +141,13 @@ const FormAntd = () => {
           setSelectedResidence(allValues.residence);
           setFormData({
             ...allValues,
-            selectedResidence, // เพิ่ม selectedResidence เข้าไปใน formData
+            selectedResidence, 
           });
         }}
       >
         <Form.Item
           className="mt-4 text-center"
           name="nickname"
-          /* label="Nickname" */
           tooltip="What do you want others to call you?"
           rules={[
             {
@@ -196,7 +173,6 @@ const FormAntd = () => {
             width: "100%",
             fontFamily: "'Kanit', sans-serif",
           }}
-          /* label="E-mail" */
           rules={[
             {
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -213,40 +189,19 @@ const FormAntd = () => {
           />
         </Form.Item>
 
-        {/* <Form.Item
-          name="residence"
-         
-          rules={[
-            {
-              type: "array",
-              required: true,
-              message: "Please select your habitual residence!",
-            },
-          ]}
-        >
-          <Cascader options={residences} placeholder="จังหวัดของคุณ" />
-        </Form.Item> */}
-
         <Form.Item
           name="phone"
           rules={[
-            /* {
-      required: true,
-      message: "โปรดป้อนเบอร์โทรศัพท์ของคุณ",
-    }, */
             {
               validator: (_, value) => {
                 if (!value) {
                   return Promise.reject("ป้อนเบอร์โทรศัพท์ของคุณ");
                 }
-                // ตรวจสอบว่ามีตัวอักษรที่ไม่ใช่ตัวเลขหรือไม่
                 const containsNonDigit = /\D/.test(value);
 
                 if (containsNonDigit) {
                   return Promise.reject("กรุณาป้อนตัวเลขเท่านั้น");
                 }
-
-                // ตรวจสอบว่าเป็นตัวเลข 10 หลักหรือไม่
                 const phoneRegex = /^\d{10}$/;
                 if (!phoneRegex.test(value)) {
                   return Promise.reject("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง");
@@ -290,9 +245,8 @@ const FormAntd = () => {
 
         <Form.Item
           name="gender"
-          /* label="Gender" */
           rules={[{ required: true, message: "โปรดเลือกเพศของคุณ" }]}
-          className="text-center " // ใช้ text-left เพื่อชิดทางซ้าย
+          className="text-center " 
         >
           <Select
             placeholder="เพศ"
@@ -304,7 +258,6 @@ const FormAntd = () => {
           </Select>
         </Form.Item>
 
-        {/* Privacy Checkbox */}
         <Form.Item
           name="privacyCheckbox"
           valuePropName="checked"
@@ -330,7 +283,6 @@ const FormAntd = () => {
           </div>
         </Form.Item>
 
-        {/* Activity Privacy Checkbox */}
         <Form.Item
           name="activityPrivacyCheckbox"
           valuePropName="checked"
@@ -370,9 +322,6 @@ const FormAntd = () => {
           </Button>
         </Form.Item>
 
-        {/* Register Modal */}
-        {/* <Modal open={isModalOpen} onCancel={closeModal} footer={null}> */}
-
         {isModalOpen && (
           <RegisterModal
             formData={formData}
@@ -380,7 +329,6 @@ const FormAntd = () => {
             handleAcceptTermsInModal={handleAcceptTermsInModalFromRegister}
           />
         )}
-        {/* </Modal> */}
       </Form>
     </div>
   );
