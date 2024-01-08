@@ -17,10 +17,6 @@ function RegisterSuccess() {
     <div>
         <div className='container bg-[#9cff24] ms-auto mx-auto flex flex-col text-center items-center w-full'>
 
-        {/* <div className='border-2 p-10 mt-10 rounded-2xl bg-white'>
-              <img src="" alt="Logo Campaign"/>
-        </div> */}
-
         <div className="absolute top-[44%] bg-white p-10">
             <h1 className="flex-center text-2xl ">ลงทะเบียนสำเร็จ</h1>
         </div>
