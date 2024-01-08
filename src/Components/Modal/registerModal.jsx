@@ -34,32 +34,32 @@ const RegisterModal = ({ closeModal, formData, handleAcceptTermsInModal,open }) 
                 type="text"
                 className="border-2 p-1 rounded-lg w-[200px]"
                 placeholder="Username Get Register มาแสดง"
-                value={formData.nickname} // ใช้ข้อมูลจาก form ใน State
-                readOnly // ทำให้ input เป็นแบบอ่านเท่านั้น
+                value={formData.nickname} 
+                readOnly 
               />
               <input
                 type="text"
                 className="border-2 p-1 rounded-lg w-[200px] " 
-                value={formData.phone} // ใช้ข้อมูลจาก form ใน State
-                readOnly // ทำให้ input เป็นแบบอ่านเท่านั้น
+                value={formData.phone} 
+                readOnly 
               />
               <input
                 type="text"
                 className="border-2 p-1 rounded-lg w-[200px]"
-                value={formData.email} // ใช้ข้อมูลจาก form ใน State
-                readOnly // ทำให้ input เป็นแบบอ่านเท่านั้น
+                value={formData.email} 
+                readOnly 
               />
               <input
                 type="text"
                 className="border-2 p-1 rounded-lg w-[200px]"
-                value={formatBirthDate(formData.birth)} // ใช้ข้อมูลจาก form ใน State
-                readOnly // ทำให้ input เป็นแบบอ่านเท่านั้น
+                value={formatBirthDate(formData.birth)} 
+                readOnly 
               />
               <input
                 type="text"
                 className="border-2 p-1 rounded-lg w-[200px]"
-                value={formData.gender} // ใช้ข้อมูลจาก form ใน State
-                readOnly // ทำให้ input เป็นแบบอ่านเท่านั้น
+                value={formData.gender} 
+                readOnly 
               />
             </div>
 
@@ -77,9 +77,9 @@ const RegisterModal = ({ closeModal, formData, handleAcceptTermsInModal,open }) 
                 className="bg-black text-white px-4 py-2 mt-4 rounded-md mr-4"
                 type="button"
                 onClick={() => {
-                  setAcceptTerms(true); // เปลี่ยน acceptTerms เป็น true
+                  setAcceptTerms(true); 
                   handleAcceptTermsInModal();
-                  closeModal(); // เรียก handleAcceptTermsInModal
+                  closeModal(); 
                 }}
                 disabled={acceptTerms}
               >
