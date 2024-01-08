@@ -38,8 +38,8 @@ function Activity() {
   // timestamp
   const currentDate = () => {
     const now = new Date();
-    const day = now.getDate().toString().padStart(2, "0"); // ให้วันที่มีรูปแบบ 01, 02, 03 แทนที่จะเป็น 1, 2, 3
-    const month = (now.getMonth() + 1).toString().padStart(2, "0"); // เพิ่ม 1 เนื่องจาก getMonth เริ่มต้นที่ 0 (0 = มกราคม)
+    const day = now.getDate().toString().padStart(2, "0"); 
+    const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
     const year = now.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -74,13 +74,13 @@ function Activity() {
     if (!imageFile) {
       setError("กรุณาอัพโหลดใบเสร็จ");
     } else {
-      const maxSize = 5 * 1024 * 1024; // 5 MB ในหน่วยไบต์
+      const maxSize = 5 * 1024 * 1024; 
       if (imageFile.size > maxSize) {
         setError("ขนาดไฟล์ของภาพต้องไม่เกิน 5 MB");
         message.error("ขนาดไฟล์ของภาพต้องไม่เกิน 5 MB");
       } else {
         setFile(imageFile);
-        setFileName(imageFile.name); // ตั้งชื่อไฟล์
+        setFileName(imageFile.name); 
         setError(null);
         message.success("ไฟล์ถูกอัปโหลดเรียบร้อยแล้ว");
       }
@@ -88,7 +88,6 @@ function Activity() {
   };
 
   const handleSave = () => {
-    // เปิด Modal และตั้งค่าข้อมูลที่ใช้แสดงใน Modal
     if (!textValue || !selectedShop || !file) {
       Swal.fire({
         icon: "error",
@@ -107,7 +106,6 @@ function Activity() {
       imgUrl: file,
     };
 
-    // ตั้งค่าข้อมูลที่ใช้แสดงใน Modal
     setModalData(activityData);
   };
 
@@ -124,7 +122,6 @@ function Activity() {
     return downloadURL;
   };
 
-  // บันทึกข้อมูลลงใน Firebase
   const handleAccept = async () => {
     if (!file || !user) {
       console.error("File or user is undefined");
@@ -136,7 +133,6 @@ function Activity() {
       const timestamp = currentDate();
       const time = currentTime();
 
-      // ดึง userId จาก localStorage
       const userId = localStorage.getItem("session");
 
       if (!userId) {
@@ -144,7 +140,6 @@ function Activity() {
         return;
       }
 
-      // เพิ่มข้อมูลกิจกรรมลงในคอลเล็กชัน 'activity'
       const docRef = await addDoc(collection(db, "activity"), {
         userId: userId,
         textValue,
@@ -158,14 +153,12 @@ function Activity() {
 
       console.log("Document written with ID:", docRef.id);
 
-      // อัปเดตข้อมูลผู้ใช้ใน Firestore
       const userDocRef = doc(db, "users", userId);
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
 
-        // อัปเดตข้อมูลผู้ใช้ด้วยข้อมูลกิจกรรมใหม่
         const updatedUserData = {
           ...userData,
           textValue,
@@ -177,7 +170,6 @@ function Activity() {
           time,
         };
 
-        // บันทึกข้อมูลผู้ใช้ที่ถูกอัปเดตกลับไปที่ Firestore
         await setDoc(userDocRef, updatedUserData);
       }
 
@@ -192,14 +184,13 @@ function Activity() {
       });
     } catch (error) {
       console.error("Error during data submission:", error);
-      // จัดการข้อผิดพลาดตามที่คุณต้องการ
     }
   };
 
   const handleChangeCascader = (value) => {
     if (value.length > 0) {
-      setRegion(value[0]); // ตั้งค่า region จากตำแหน่งแรกของ value array
-      setState(value[1]); // ตั้งค่า state จากตำแหน่งที่สองของ value array
+      setRegion(value[0]); 
+      setState(value[1]);
     }
   };
 
